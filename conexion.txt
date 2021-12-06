@@ -1,0 +1,38 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import javax.swing.JOptionPane;
+
+public class conexion {
+    
+   protected static Connection cn = null;
+   
+   public static Connection conectar(){
+       
+       try {
+           String url ="jdbc:mysql://127.0.0.1:3307/dbTRANSPORTE" ;
+           String user ="root";
+           String pass ="root";
+           String driver="com.mysql.jdbc.Driver";
+           Class.forName(driver);
+           cn = DriverManager.getConnection(url, user, pass);
+       } catch (Exception e) {
+           JOptionPane.showMessageDialog(null,"Error en el:" + e.getMessage());
+       }
+
+       return cn;
+   }
+   
+   public static void cerrarCnx() throws Exception{
+        if (conexion.cn != null) cn.close();
+   }
+           
+    public static void main(String[] args) throws Exception {
+        conexion.conectar();
+        if (conexion.cn != null){ 
+            System.out.println("Conectado");
+        } else
+            System.out.println("No estás conectado, revisa...!!!");
+    }
+}
